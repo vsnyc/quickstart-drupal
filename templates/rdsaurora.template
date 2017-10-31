@@ -76,7 +76,6 @@
         "DBMasterUserPassword": {
             "AllowedPattern": "(?=\\S)[^@\/\"\\r\\n\\t\\f\\s]*",
             "ConstraintDescription": "Min 8 alphanumeric. Cannot contain white space, @, /, \"",
-            "Default": "Admin-123456",
             "Description": "The database admin account password",
             "MaxLength": "41",
             "MinLength": "8",
