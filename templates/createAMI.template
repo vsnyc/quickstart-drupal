@@ -126,69 +126,21 @@
                 "AMIName": {"Ref": "AMIBaseName"},
                 "Version": 1
             }
-        },
-        "CleanUpAMIFunction": {
-            "Type": "AWS::Lambda::Function",
-            "Properties": {
-                "Handler": "index.lambda_handler",
-                "Runtime": "python2.7",
-                "Timeout": "300",
-                "Role": {
-                    "Fn::GetAtt": [
-                        "CreateAMIFunctionExecuteRole",
-                        "Arn"
-                    ]
-                },
-                "Code": {
-                    "ZipFile": {
-                        "Fn::Join": [
-                            "\n",
-                            [
-                                "import json",
-                                "import cfnresponse",
-                                "import boto3",
-                                "from random import randint",
-                                "def lambda_handler(event, context):",
-                                "  if event['RequestType'] == 'Delete':",
-                                "    try:",
-                                "      ec2 = boto3.resource('ec2')",
-                                "      image = ec2.Image(event['ResourceProperties']['AMIId'])",
-                                "      image.deregister()",
-                                "      cfnresponse.send(event, context, cfnresponse.SUCCESS, {})",
-                                "    except Exception as inst:",
-                                "      print(inst)",
-                                "      cfnresponse.send(event, context, cfnresponse.FAILED, {})",
-                                "  else:",
-                                "    cfnresponse.send(event, context, cfnresponse.SUCCESS, {})"
-                            ]
-                        ]
-                    }
-                }
-            }
-        },
-        "CleanUpAMI": {
-            "Type": "Custom::CleanUpAMI",
-            "Properties": {
-                "ServiceToken": {
-                    "Fn::GetAtt": [
-                        "CleanUpAMIFunction",
-                        "Arn"
-                    ]
-                },
-                "AMIId": {
-                    "Fn::GetAtt": [
-                        "CreateAMI",
-                        "ami"
-                    ]
-                },
-                "Version": 1
-            }
         }
     },
     "Outputs":{
         "AMIId":{
             "Description": "AMI ID of  Image",
             "Value": {"Fn::GetAtt":["CreateAMI", "ami"]}
+        },
+        "AMIFunctionRole": {
+            "Description": "IAM Role for creating and de-registering AMI",
+            "Value": {
+                "Fn::GetAtt": [
+                    "CreateAMIFunctionExecuteRole",
+                    "Arn"
+                ]
+            }
         }
     }
 }

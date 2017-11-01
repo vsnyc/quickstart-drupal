@@ -32,8 +32,8 @@
         "ParameterValue": "t2.micro"
     },
     {
-        "ParameterKey": "KeyPairName",
-        "ParameterValue": "$[alfred_getkeypair]"
+        "ParameterKey": "KeyPair",
+        "ParameterValue": "cikey"
     },
     {
         "ParameterKey": "RemoteAccessCIDR",
@@ -49,7 +49,7 @@
     },
     {
         "ParameterKey": "DBMasterUserPassword",
-        "ParameterValue": "$[alfred_genpass_8S]"
+        "ParameterValue": "Tyug8Rr63245"
     },
     {
         "ParameterKey": "DBMultiAZ",
@@ -125,10 +125,10 @@
     },
     {
         "ParameterKey": "QSS3BucketName",
-        "ParameterValue": "$[taskcat_autobucket]"
+        "ParameterValue": "vinod-taskcat-qs-drupal"
     },
     {
         "ParameterKey": "QSS3KeyPrefix",
-        "ParameterValue": "quickstart-drupal"
+        "ParameterValue": "quickstart-drupal/"
     }
 ]

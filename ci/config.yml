@@ -1,6 +1,7 @@
 global:
   qsname: quickstart-drupal
   owner: adethyv@amazon.com
+  s3bucket: vinod-taskcat-qs-drupal
   # Regions must support Lambda and EFS
   regions:
     - us-east-1
@@ -13,8 +14,7 @@ global:
   
 tests:
   quickstart-drupal:
-    parameter_input: drupal-master.json
+    parameter_input: drupal-master-local.json
     template_file: drupal-master.template
     regions:
     - us-east-2
-    - us-west-2

@@ -470,6 +470,9 @@
                                     " -h ", {"Ref": "DBEndpointAddress"},
                                     " < /tmp/setup_drupaldb.sql || error_exit 'Failed to create database user'\n"
                                 ]]}
+                            },
+                            "02_cleanup": {
+                                "command": "sudo rm -f /tmp/setup_drupaldb.sql"
                             }
                         }
                     },
@@ -812,6 +815,16 @@
                 "Tags": [
                     {"Key": "Name", "Value": "DrupalWebserverElb"}
                 ]
+            }
+        },
+        "CleanupDrupalAMI":{
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties":{
+                "TemplateURL": {"Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/cleanupAMI.template"},
+                "Parameters":{
+                    "DrupalAMIImageId": {"Fn::GetAtt": ["CreateDrupalAMI", "Outputs.AMIId"]},
+                    "AMIFunctionExecuteRole": {"Fn::GetAtt": ["CreateDrupalAMI", "Outputs.AMIFunctionRole"]}
+                }
             }
         }
     },
